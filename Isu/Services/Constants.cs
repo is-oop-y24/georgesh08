@@ -6,5 +6,8 @@ namespace Isu.Services
         public const int MinCourseNumber = 1;
         public const int MaxCourseNumber = 4;
         public const int GroupNameLength = 5;
+        public const int CourseNumberPos = 2;
+        public const int DirectionLetterPos = 0;
+        public const int DirectionNumPos = 1;
     }
 }

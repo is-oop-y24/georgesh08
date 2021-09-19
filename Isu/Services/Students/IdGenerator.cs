@@ -4,10 +4,9 @@ namespace Isu.Services.Students
     {
         private static int _studentId = 100000;
 
-        public int StudentId
+        public int GenerateNewId()
         {
-            get => _studentId;
-            set => _studentId = value;
+            return _studentId++;
         }
     }
 }

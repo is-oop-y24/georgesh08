@@ -52,7 +52,7 @@ namespace Isu.Services
             var students = new List<Student>();
             foreach (Group group in _isuStruct)
             {
-                if ((int)char.GetNumericValue(group.GroupName.Name[2]) == courseNumber.Number)
+                if ((int)char.GetNumericValue(group.GroupName.Name[Constants.CourseNumberPos]) == courseNumber.Number)
                 {
                     students.AddRange(group.Students);
                 }
@@ -103,7 +103,7 @@ namespace Isu.Services
             var groups = new List<Group>();
             foreach (Group group in _isuStruct)
             {
-                if ((int)char.GetNumericValue(group.GroupName.Name[2]) == courseNumber.Number)
+                if ((int)char.GetNumericValue(group.GroupName.Name[Constants.CourseNumberPos]) == courseNumber.Number)
                 {
                     groups.Add(group);
                 }

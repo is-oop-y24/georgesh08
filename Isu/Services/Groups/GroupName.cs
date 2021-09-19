@@ -19,10 +19,10 @@ namespace Isu.Services.Groups
             get => _groupName;
         }
 
-        // magic number, use CourseNumber
         private bool IsCorrectGroupName(string groupName)
         {
-            return groupName[0] == 'M' && groupName[1] == '3' && (groupName[2] >= '1' && groupName[2] <= '4') &&
+            return groupName[Constants.DirectionLetterPos] == 'M' && groupName[Constants.DirectionNumPos] == '3' &&
+                   (groupName[Constants.CourseNumberPos] >= '1' && groupName[Constants.CourseNumberPos] <= '4') &&
                    groupName.Length == Constants.GroupNameLength;
         }
     }

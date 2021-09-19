@@ -11,7 +11,7 @@ namespace Isu.Services.Students
         {
             _studentGroup = groupName;
             _name = name;
-            _id = new IdGenerator().StudentId++;
+            _id = new IdGenerator().GenerateNewId();
         }
 
         public string Name
