@@ -7,7 +7,7 @@ namespace Isu.Services.Groups
     public class Group
     {
         private readonly GroupName _groupName;
-        private List<Student> _students = new List<Student>(Constants.MaxGroupCapacity);
+        private List<Student> _students = new List<Student>();
 
         public Group(GroupName groupName)
         {

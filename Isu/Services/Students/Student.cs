@@ -4,10 +4,8 @@ namespace Isu.Services.Students
     {
         private readonly string _name;
 
-        // use Group
         private string _studentGroup;
 
-        // invariant
         private int _id;
         public Student(string groupName, string name)
         {

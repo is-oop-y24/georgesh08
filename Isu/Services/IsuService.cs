@@ -36,7 +36,6 @@ namespace Isu.Services
 
         public List<Student> FindStudents(GroupName groupName)
         {
-            // _isuStruct.Find(group => group.GroupName.Name == groupName.Name);
             foreach (Group group in _isuStruct)
             {
                 if (group.GroupName.Name == groupName.Name)
