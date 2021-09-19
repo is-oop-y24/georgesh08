@@ -6,14 +6,12 @@ namespace Isu.Services.Course
     {
         protected CourseNumber(int courseNumber)
         {
-            if ((courseNumber < 1) || (courseNumber > 4))
+            if ((courseNumber < Constants.MinCourseNumber) || (courseNumber > Constants.MaxCourseNumber))
             {
                 throw new IsuException("Invalid course number");
             }
-            else
-            {
-                Number = courseNumber;
-            }
+
+            Number = courseNumber;
         }
 
         public int Number { get; }

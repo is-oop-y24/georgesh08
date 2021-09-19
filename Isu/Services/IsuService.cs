@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Isu.Services.Course;
 using Isu.Services.Groups;
@@ -14,17 +13,8 @@ namespace Isu.Services
 
         public Student AddStudent(Group group, string name)
         {
-            if (_isuStruct[_isuStruct.IndexOf(group)].IsFull())
-            {
-                throw new IsuException("Group is full. Unable to add new student.");
-            }
-
-            var newStudent = new Student(group.GroupName.Name, name)
-            {
-                Id = CreateNewId(name),
-            };
-            _isuStruct[_isuStruct.IndexOf(group)].Students.Add(newStudent);
-
+            var newStudent = new Student(group.GroupName.Name, name);
+            _isuStruct[_isuStruct.IndexOf(group)].AddStudent(newStudent);
             return newStudent;
         }
 
@@ -46,6 +36,7 @@ namespace Isu.Services
 
         public List<Student> FindStudents(GroupName groupName)
         {
+            // _isuStruct.Find(group => group.GroupName.Name == groupName.Name);
             foreach (Group group in _isuStruct)
             {
                 if (group.GroupName.Name == groupName.Name)
@@ -137,24 +128,11 @@ namespace Isu.Services
                 }
                 else if (group.GroupName.Name == newGroup.GroupName.Name)
                 {
-                    group.Students.Add(student);
+                    group.AddStudent(student);
                 }
             }
 
             student.GroupName = newGroup.GroupName.Name;
-        }
-
-        private int CreateNewId(string name)
-        {
-            int id = 0;
-            var rand = new Random();
-            for (int i = 0; i < name.Length - 1; ++i)
-            {
-                id += (int)char.GetNumericValue(name[i]) + (int)char.GetNumericValue(name[i + 1]) +
-                      rand.Next(1000, 100000);
-            }
-
-            return id + rand.Next(100000, 900000);
         }
     }
 }

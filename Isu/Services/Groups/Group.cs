@@ -1,23 +1,17 @@
 using System.Collections.Generic;
 using Isu.Services.Students;
+using Isu.Tools;
 
 namespace Isu.Services.Groups
 {
     public class Group
     {
-        private const int MaxCapacity = 3;
-        private List<Student> _students = new List<Student>(MaxCapacity); // Max capacity equals 3 only for tests
-        private GroupName _groupName;
+        private readonly GroupName _groupName;
+        private List<Student> _students = new List<Student>(Constants.MaxGroupCapacity);
 
         public Group(GroupName groupName)
         {
             _groupName = groupName;
-        }
-
-        public Group(GroupName groupName, List<Student> students)
-        {
-            _groupName = groupName;
-            _students = students;
         }
 
         public GroupName GroupName => _groupName;
@@ -26,7 +20,17 @@ namespace Isu.Services.Groups
 
         public bool IsFull()
         {
-            return _students.Count == MaxCapacity;
+            return _students.Count == Constants.MaxGroupCapacity;
+        }
+
+        public void AddStudent(Student student)
+        {
+            if (IsFull())
+            {
+                throw new IsuException("Group is full. Unable to add new student.");
+            }
+
+            _students.Add(student);
         }
     }
 }

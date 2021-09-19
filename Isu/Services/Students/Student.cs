@@ -3,17 +3,22 @@ namespace Isu.Services.Students
     public class Student
     {
         private readonly string _name;
+
+        // use Group
         private string _studentGroup;
+
+        // invariant
         private int _id;
         public Student(string groupName, string name)
         {
             _studentGroup = groupName;
             _name = name;
+            _id = new IdGenerator().StudentId++;
         }
 
         public string Name
         {
-            get { return _name; }
+            get => _name;
         }
 
         public string GroupName
@@ -25,7 +30,6 @@ namespace Isu.Services.Students
         public int Id
         {
             get => _id;
-            set => _id = value;
         }
     }
 }
