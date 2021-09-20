@@ -1,4 +1,6 @@
 using Isu.Services;
+using Isu.Services.Groups;
+using Isu.Services.Students;
 using Isu.Tools;
 using NUnit.Framework;
 
@@ -11,14 +13,19 @@ namespace Isu.Tests
         [SetUp]
         public void Setup()
         {
-            //TODO: implement
-            _isuService = null;
+            _isuService = new IsuService();
         }
 
         [Test]
         public void AddStudentToGroup_StudentHasGroupAndGroupContainsStudent()
         {
-            Assert.Fail();
+            string groupName = "M3203";
+            Group newGroup = _isuService.AddGroup(groupName);
+            Student newStudent = _isuService.AddStudent(newGroup, "George Shulyak");
+            if (newStudent.GroupName != groupName && newGroup.Students.IndexOf(newStudent) == -1)
+            {
+                Assert.Fail();
+            }
         }
 
         [Test]
@@ -26,7 +33,13 @@ namespace Isu.Tests
         {
             Assert.Catch<IsuException>(() =>
             {
-                
+                Group newGroup = _isuService.AddGroup("M3203");
+                Student newStudent = _isuService.AddStudent(newGroup, "George Shulyak");
+                for (int i = 0; i < Constants.MaxGroupCapacity; ++i)
+                {
+                    newGroup.AddStudent(newStudent);
+                }
+                newGroup.AddStudent(newStudent);
             });
         }
 
@@ -35,7 +48,7 @@ namespace Isu.Tests
         {
             Assert.Catch<IsuException>(() =>
             {
-
+                _isuService.AddStudent(_isuService.AddGroup("N3203"), "George Shulyak");
             });
         }
 
@@ -44,7 +57,14 @@ namespace Isu.Tests
         {
             Assert.Catch<IsuException>(() =>
             {
-
+                Group currentStudentGroup = _isuService.AddGroup("M3203");
+                Student newStudent = _isuService.AddStudent(currentStudentGroup, "George Shulyak");
+                Group newGroup = _isuService.AddGroup("M3204");
+                for (int i = 0; i < Constants.MaxGroupCapacity; ++i)
+                {
+                    newGroup.AddStudent(newStudent);
+                }
+                _isuService.ChangeStudentGroup(newStudent, newGroup);
             });
         }
     }
