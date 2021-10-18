@@ -21,9 +21,7 @@ namespace Isu.Services.Groups
 
         private bool IsCorrectGroupName(string groupName)
         {
-            return groupName[Constants.FacultySymbolPos] == Constants.FacultySymbol &&
-                   groupName[Constants.FacultyNymPos] == Constants.FacultyNum &&
-                   ((int)char.GetNumericValue(groupName[Constants.CourseNumberPos]) >= Constants.MinCourseNumber &&
+            return ((int)char.GetNumericValue(groupName[Constants.CourseNumberPos]) >= Constants.MinCourseNumber &&
                     (int)char.GetNumericValue(groupName[Constants.CourseNumberPos]) <= Constants.MaxCourseNumber) &&
                    groupName.Length == Constants.GroupNameLength;
         }

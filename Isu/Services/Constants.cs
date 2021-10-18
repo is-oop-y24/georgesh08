@@ -8,8 +8,5 @@ namespace Isu.Services
         public const int GroupNameLength = 5;
         public const int CourseNumberPos = 2;
         public const int FacultySymbolPos = 0;
-        public const int FacultyNymPos = 1;
-        public const char FacultySymbol = 'M';
-        public const char FacultyNum = '3';
     }
 }
