@@ -25,6 +25,7 @@ namespace IsuExtra
         }
 
         public string Megafaculty { get; }
+
         public string OgnpName { get; }
 
         public void AddLessonToStream(int streamNumber, Lesson lesson, int weekday)

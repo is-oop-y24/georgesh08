@@ -8,42 +8,28 @@ namespace IsuExtra
 {
     public class MegaFaculties
     {
-        private static List<string> _itmoMegafaculties = new List<string> { "FTF", "TINT", "KTU", "BTINS", "FTMI" };
+        private static Dictionary<string, List<char>> _itmoMegafaculties = new Dictionary<string, List<char>>();
         public static string GetMegaFacultyByGroupName(GroupName name)
         {
-            char facultySymbol = name.Name[Constants.FacultySymbolPos];
-            switch (facultySymbol)
+            foreach (KeyValuePair<string, List<char>> faculty in _itmoMegafaculties)
             {
-                case 'B':
-                case 'V':
-                case 'Z':
-                    return "FTF";
-                case 'K':
-                case 'M':
-                    return "TINT";
-                case 'L':
-                case 'W':
-                    return "BTINS";
-                case 'N':
-                case 'P':
-                case 'R':
-                case 'T':
-                    return "KTU";
-                case 'U':
-                    return "FTMI";
+                if (faculty.Value.Contains(name.Name[Constants.FacultySymbolPos]))
+                {
+                    return faculty.Key;
+                }
             }
 
-            throw new MegaFacultyExistenceException("No such megafaculty in ITMO.");
+            throw new MegaFacultyExistenceException("No such megafaculty.");
         }
 
         public static List<string> GetItmoMegaFaculties()
         {
-            return _itmoMegafaculties;
+            return _itmoMegafaculties.Select(faculty => faculty.Key).ToList();
         }
 
-        public void AddNewMegaFaculty(string newFaculty)
+        public static void AddNewMegaFaculty(string newFaculty, List<char> groupNameAvailableChars)
         {
-            _itmoMegafaculties.Add(newFaculty);
+            _itmoMegafaculties.Add(newFaculty, groupNameAvailableChars);
         }
     }
 }
