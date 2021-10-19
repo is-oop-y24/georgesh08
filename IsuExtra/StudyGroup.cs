@@ -10,7 +10,7 @@ namespace IsuExtra
             : base(groupName)
         {
             _groupTimetable = groupTimetable;
-            GroupFaculty = new MegaFaculty().GetMegaFacultyByGroupName(groupName);
+            GroupFaculty = MegaFaculties.GetMegaFacultyByGroupName(groupName);
         }
 
         public string GroupFaculty { get; }

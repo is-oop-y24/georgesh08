@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Isu.Services.Students;
 
 namespace IsuExtra
 {
@@ -8,7 +9,7 @@ namespace IsuExtra
         void AddStudentToGroup(StudyGroup group, AdvancedStudent student);
         void EnrollStudentToOgnp(Ognp ognp, AdvancedStudent student);
         Ognp AddNewOgnp(string faculty, string name);
-        List<AdvancedStudent> GetStudentsWithoutOgnp(StudyGroup group);
+        List<Student> GetStudentsWithoutOgnp(StudyGroup group);
         ReadOnlyCollection<Stream> GetOgnpStreams(Ognp ognp);
         void DeleteStudentFromOgnp(Ognp ognp, AdvancedStudent student);
     }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using IsuExtra.Tools;
 
@@ -7,12 +6,12 @@ namespace IsuExtra
 {
     public class Timetable
     {
-        private List<List<Lesson>> _timetable = new List<List<Lesson>>();
+        private Dictionary<int, List<Lesson>> _timetable = new Dictionary<int, List<Lesson>>();
         public Timetable()
         {
             for (int i = 0; i < Consts.WorkdayAmount; ++i)
             {
-                _timetable.Add(new List<Lesson>());
+                _timetable.Add(i, new List<Lesson>());
             }
         }
 

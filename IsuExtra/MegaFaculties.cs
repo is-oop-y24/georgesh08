@@ -1,12 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
 using Isu.Services;
 using Isu.Services.Groups;
 using IsuExtra.Tools;
 
 namespace IsuExtra
 {
-    public class MegaFaculty
+    public class MegaFaculties
     {
-        public string GetMegaFacultyByGroupName(GroupName name)
+        private static List<string> _itmoMegafaculties = new List<string> { "FTF", "TINT", "KTU", "BTINS", "FTMI" };
+        public static string GetMegaFacultyByGroupName(GroupName name)
         {
             char facultySymbol = name.Name[Constants.FacultySymbolPos];
             switch (facultySymbol)
@@ -31,6 +34,16 @@ namespace IsuExtra
             }
 
             throw new MegaFacultyExistenceException("No such megafaculty in ITMO.");
+        }
+
+        public static List<string> GetItmoMegaFaculties()
+        {
+            return _itmoMegafaculties;
+        }
+
+        public void AddNewMegaFaculty(string newFaculty)
+        {
+            _itmoMegafaculties.Add(newFaculty);
         }
     }
 }

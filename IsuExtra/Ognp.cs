@@ -11,7 +11,7 @@ namespace IsuExtra
 
         public Ognp(string name, string megafaculty)
         {
-            if (!Consts.ItmoMegafaculties.Contains(megafaculty))
+            if (!MegaFaculties.GetItmoMegaFaculties().Contains(megafaculty))
             {
                 throw new MegaFacultyExistenceException("No such megafaculty.");
             }

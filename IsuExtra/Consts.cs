@@ -9,6 +9,5 @@ namespace IsuExtra
         public const int FacultyAmount = 5;
         public const int WorkdayAmount = 6;
         public const int OgnpAmountPerStudent = 2;
-        public static readonly string[] ItmoMegafaculties = { "FTF", "TINT", "KTU", "BTINS", "FTMI" };
     }
 }

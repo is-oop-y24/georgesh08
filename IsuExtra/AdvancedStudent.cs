@@ -12,7 +12,7 @@ namespace IsuExtra
         public AdvancedStudent(string groupName, string name)
             : base(groupName, name)
         {
-            StudentFaculty = new MegaFaculty().GetMegaFacultyByGroupName(new GroupName(groupName));
+            StudentFaculty = MegaFaculties.GetMegaFacultyByGroupName(new GroupName(groupName));
         }
 
         public string StudentFaculty { get; }

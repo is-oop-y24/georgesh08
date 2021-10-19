@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Isu.Services.Students;
 using IsuExtra.Tools;
 
 namespace IsuExtra
 {
     public class IsuExtraService : IIsuExtraService
     {
-        private readonly List<StudyGroup> _studyGroups = new List<StudyGroup>();
         private readonly List<Ognp> _ognpList = new List<Ognp>();
 
         public void AddStudentToGroup(StudyGroup group, AdvancedStudent student)
@@ -16,10 +16,17 @@ namespace IsuExtra
             student.StudentTimetable = group.GetGroupTimetable();
         }
 
-        public List<AdvancedStudent> GetStudentsWithoutOgnp(StudyGroup group)
+        public List<Student> GetStudentsWithoutOgnp(StudyGroup group)
         {
-            return group.Students.Cast<AdvancedStudent>()
-                .Where(student => student.GetStudentOgnp().Count != Consts.OgnpAmountPerStudent).ToList();
+            List<Student> comparator = group.Students;
+
+            return (from ognp in _ognpList
+                from stream in ognp.GetStreamsList()
+                select stream.GetStreamStudents()
+                into streamStudents
+                from groupStudent in comparator
+                where !streamStudents.Contains(groupStudent)
+                select groupStudent).ToList();
         }
 
         public void EnrollStudentToOgnp(Ognp ognp, AdvancedStudent student)
