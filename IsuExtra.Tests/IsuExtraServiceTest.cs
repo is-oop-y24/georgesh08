@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Isu.Services.Groups;
 using IsuExtra.Tools;
 using NUnit.Framework;
@@ -19,6 +20,8 @@ namespace IsuExtra.Tests
         {
             Assert.Catch<IsuExtraException>(() =>
             {
+                _isuExtraService.AddNewMegaFaculty("TINT", new List<char>() {'M', 'N'});
+                _isuExtraService.AddNewMegaFaculty("FTMI", new List<char>() {'K', 'P', 'O'});
                 var newStudent = new AdvancedStudent("M3203", "George");
                 var newStudyGroup = new StudyGroup(new GroupName("M3203"), new Timetable());
                 _isuExtraService.AddStudentToGroup(newStudyGroup, newStudent);
@@ -39,7 +42,7 @@ namespace IsuExtra.Tests
                 newTimetable.AddLesson(2, newLesson);
                 var newStudyGroup = new StudyGroup(new GroupName("M3203"), newTimetable);
                 _isuExtraService.AddStudentToGroup(newStudyGroup, newStudent);
-                var newOgnp = new Ognp("TINT", "Programming");
+                var newOgnp = new Ognp("Programming", "TINT");
                 var newLesson2 = new Lesson(2, 322, "Vozianova A.V.");
                 newOgnp.AddLessonToStream(1, newLesson2, 2);
                 _isuExtraService.EnrollStudentToOgnp(newOgnp, newStudent);

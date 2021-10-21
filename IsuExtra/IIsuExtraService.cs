@@ -12,5 +12,6 @@ namespace IsuExtra
         List<Student> GetStudentsWithoutOgnp(StudyGroup group);
         ReadOnlyCollection<Stream> GetOgnpStreams(Ognp ognp);
         void DeleteStudentFromOgnp(Ognp ognp, AdvancedStudent student);
+        void AddNewMegaFaculty(string name, List<char> groupSymbols);
     }
 }

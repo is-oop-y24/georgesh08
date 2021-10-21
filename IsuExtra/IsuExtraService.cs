@@ -128,5 +128,10 @@ namespace IsuExtra
             _ognpList.Add(newOgnp);
             return newOgnp;
         }
+
+        public void AddNewMegaFaculty(string name, List<char> groupSymbols)
+        {
+            MegaFaculties.AddNewMegaFaculty(name, groupSymbols);
+        }
     }
 }
