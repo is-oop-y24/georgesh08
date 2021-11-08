@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace Backups
 {
-    public class LocalFileSystemBackupManager : ILocalFileSystemManager
+    public class LocalFileSystemBackupManager : ILocalFileSystemBackupManager
     {
         public void CreateRepository(string path)
         {
@@ -13,26 +13,28 @@ namespace Backups
 
         public List<string> SplitStorage(string repositoryPath, List<string> files, int numberOfBackUp)
         {
+            int fileCounter = 1;
             var points = new List<string>();
             foreach (string file in files)
             {
-                string name = Path.GetFileNameWithoutExtension(file) + "_" + numberOfBackUp;
-                string outputFile = repositoryPath + "\\" + name + ".zip";
-                string newFilePath = outputFile + "\\" + name + Path.GetExtension(file);
+                string name = Path.GetFileNameWithoutExtension(file) + "_" + numberOfBackUp + Path.GetExtension(file);
+                string outputFile = repositoryPath + "\\" + numberOfBackUp + "_" + fileCounter + ".zip";
+                fileCounter++;
+                string newFilePath = outputFile + "\\" + name;
                 points.Add(newFilePath);
                 using (ZipArchive archive = ZipFile.Open(outputFile, ZipArchiveMode.Create))
                 {
-                    archive.CreateEntryFromFile(file, name + Path.GetExtension(file));
+                    archive.CreateEntryFromFile(file, name);
                 }
             }
 
             return points;
         }
 
-        public List<string> SingleStorage(string repositoryPath, string storageName, List<string> files, int numberOfBackUp)
+        public List<string> SingleStorage(string repositoryPath, List<string> files, int numberOfBackUp)
         {
             var filesInPoint = new List<string>();
-            string outputFile = repositoryPath + "\\" + storageName + ".zip";
+            string outputFile = repositoryPath + "\\" + numberOfBackUp + ".zip";
             using ZipArchive archive = ZipFile.Open(outputFile, ZipArchiveMode.Create);
             foreach (string fileToZip in files)
             {

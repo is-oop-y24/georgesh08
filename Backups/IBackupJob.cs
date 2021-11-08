@@ -7,9 +7,8 @@ namespace Backups
         void AddObject(string objectPath);
         IReadOnlyList<string> Objects();
         void RemoveObject(string objectPath);
-        void StartFileSystemJob(string repoPath);
+        void StartJob(Repository repository);
         StorageAlgorithmType AlgorithmType();
         IReadOnlyList<RestorePoint> Points();
-        void StartMemoryJob(Repository repository);
     }
 }

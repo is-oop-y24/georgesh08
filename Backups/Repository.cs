@@ -6,10 +6,13 @@ namespace Backups
     {
         private Dictionary<string, List<string>> _repository = new Dictionary<string, List<string>>();
 
-        public Repository(string path)
+        public Repository(string path, RepositoryType type)
         {
             Path = path;
+            Type = type;
         }
+
+        public RepositoryType Type { get; }
 
         public string Path { get; }
 

@@ -9,7 +9,7 @@ namespace Backups.Tests
         [SetUp]
         public void Setup()
         {
-            _newRepo = new Repository("C:\\Users\\geo02\\Desktop\\MyRepository");
+            _newRepo = new Repository("repoPath", RepositoryType.Virtual);
         }
 
         [Test]
@@ -17,17 +17,15 @@ namespace Backups.Tests
         {
             var paths = new List<string>()
             {
-                "C:\\Users\\geo02\\Desktop\\FilesToAdd\\File_1.txt",
-                "C:\\Users\\geo02\\Desktop\\FilesToAdd\\File_2.txt",
+                "examplePath1",
+                "examplePath2",
             };
             var job = new BackupJob("job2", StorageAlgorithmType.Split, paths);
-            job.StartMemoryJob(_newRepo);
+            job.StartJob(_newRepo);
             job.RemoveObject(paths[1]);
-            job.StartMemoryJob(_newRepo);
-            if (job.Points().Count != 2 || _newRepo.Storages().Count != 3)
-            {
-                Assert.Fail();
-            }
+            job.StartJob(_newRepo);
+            Assert.AreEqual(2, job.Points().Count);
+            Assert.AreEqual(3, _newRepo.Storages().Count);
         }
     }
 }

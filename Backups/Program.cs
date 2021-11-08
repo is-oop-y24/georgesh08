@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using Backups.Tools;
 
 namespace Backups
 {
@@ -9,7 +7,7 @@ namespace Backups
     {
         private static void Main()
         {
-            // Test_2_On_Local_Machine
+            var newRep = new Repository("C:\\Users\\geo02\\Desktop\\MyRepository", RepositoryType.Local);
             const string repositoryPath = "C:\\Users\\geo02\\Desktop\\MyRepository";
             Directory.CreateDirectory(repositoryPath);
             var paths = new List<string>()
@@ -18,8 +16,8 @@ namespace Backups
                 "C:\\Users\\geo02\\Desktop\\FilesToAdd\\File_2.txt",
             };
 
-            var newJob = new BackupJob("Job1", StorageAlgorithmType.Split, paths);
-            newJob.StartFileSystemJob(repositoryPath);
+            var newJob = new BackupJob("Job1", StorageAlgorithmType.Single, paths);
+            newJob.StartJob(newRep);
         }
     }
 }
