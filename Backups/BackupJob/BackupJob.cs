@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using Backups.StorageAlgorithm;
 using Backups.Tools;
 
-namespace Backups
+namespace Backups.BackupJob
 {
     public class BackupJob : IBackupJob
     {
-        private StorageAlgorithmType _algorithmType;
+        private IStorageAlgorithmType _algorithmType;
         private List<string> _filesToBackup;
         private List<RestorePoint> _points = new List<RestorePoint>();
 
-        public BackupJob(string name, StorageAlgorithmType algorithmType, List<string> files)
+        public BackupJob(string name, IStorageAlgorithmType algorithmType, List<string> files)
         {
             Name = name;
             _algorithmType = algorithmType;
@@ -43,16 +44,9 @@ namespace Backups
             _filesToBackup.Remove(objectPath);
         }
 
-        public void StartJob(Repository repository)
+        public void StartJob(Repository.Repository repository)
         {
-            _points.Add(
-                AddRestorePoint(new BackupJobProcessHandler().StartJob(
-                    repository, _algorithmType, _filesToBackup, _points.Count)));
-        }
-
-        public StorageAlgorithmType AlgorithmType()
-        {
-            return _algorithmType;
+            _points.Add(_algorithmType.Backup(repository, _filesToBackup, (_points.Count + 1).ToString()));
         }
 
         private RestorePoint AddRestorePoint(List<string> files)

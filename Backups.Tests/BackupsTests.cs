@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using Backups.StorageAlgorithm;
+using Backups.StorageType;
 using NUnit.Framework;
 
 namespace Backups.Tests
 {
     public class BackupsTests
     {
-        private Repository _newRepo;
+        private Repository.Repository _newRepo;
         [SetUp]
         public void Setup()
         {
-            _newRepo = new Repository("repoPath", RepositoryType.Virtual);
+            _newRepo = new Repository.Repository("repoPath");
         }
 
         [Test]
@@ -20,7 +22,8 @@ namespace Backups.Tests
                 "examplePath1",
                 "examplePath2",
             };
-            var job = new BackupJob("job2", StorageAlgorithmType.Split, paths);
+            IStorageAlgorithmType newAlgo = new SplitStorageAlgorithm(new VirtualStorageSaver());
+            var job = new BackupJob.BackupJob("job1", newAlgo, paths);
             job.StartJob(_newRepo);
             job.RemoveObject(paths[1]);
             job.StartJob(_newRepo);

@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 
-namespace Backups
+namespace Backups.Repository
 {
     public class Repository
     {
         private Dictionary<string, List<string>> _repository = new Dictionary<string, List<string>>();
 
-        public Repository(string path, RepositoryType type)
+        public Repository(string path)
         {
             Path = path;
-            Type = type;
         }
-
-        public RepositoryType Type { get; }
 
         public string Path { get; }
 
