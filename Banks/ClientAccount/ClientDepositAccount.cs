@@ -5,6 +5,7 @@ using Banks.BankAccount;
 using Banks.BankFolder;
 using Banks.Constants;
 using Banks.Tools;
+using Banks.TransactionFolder;
 
 namespace Banks.ClientAccount
 {
@@ -58,7 +59,8 @@ namespace Banks.ClientAccount
                 throw new AccountException("Deposit account is still active. You can't transfer of withdraw money");
             }
 
-            cb.MakeInterbankTransaction(fromBank, toBank, AccountNumber, toAccount, moneyAmount);
+            var newData = new TransactionData(fromBank, toBank, AccountNumber, toAccount, moneyAmount);
+            cb.MakeInterbankTransaction(newData);
         }
 
         public double CalculateMoneyAmountInTimePeriod(int days)

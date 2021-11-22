@@ -38,20 +38,20 @@ namespace Banks.Tests
                 Client newClient = _builder.SetName("George").SetSurname("").GetClient();
             });
         }
-        
+
         [Test]
         public void RegisterClientWithoutPassportOrAddress_ThrowException()
         {
             Assert.Catch<BanksException>(() =>
             {
-                
+
                 Bank newBank = _centralBank.RegisterNewBank("Sber");
                 Client newClient = newBank.RegisterNewClient("George", "Shulyak", "", "");
                 var newBankAccount = new BankDebitAccount(10000);
                 newClient.OpenNewDebitAccount(newBank, newBankAccount, 100000);
             });
         }
-        
+
         [Test]
         public void WithdrawOrTransferMoneyFromDepositAccount_ThrowException()
         {

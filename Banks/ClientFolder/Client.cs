@@ -10,6 +10,7 @@ namespace Banks.ClientFolder
     public class Client
     {
         private readonly List<IClientAccount> _clientAccounts = new List<IClientAccount>();
+        private Client() { }
         public string Passport { get; private set; }
         public string Surname { get; private set; }
         public string Name { get; private set; }

@@ -3,6 +3,7 @@ using Banks.BankAccount;
 using Banks.BankFolder;
 using Banks.Constants;
 using Banks.Tools;
+using Banks.TransactionFolder;
 
 namespace Banks.ClientAccount
 {
@@ -44,7 +45,8 @@ namespace Banks.ClientAccount
 
         public void TransferMoneyToAnotherBank(CentralBank cb, Bank fromBank, Bank toBank, Guid toAccount, double moneyAmount)
         {
-            cb.MakeInterbankTransaction(fromBank, toBank, AccountNumber, toAccount, moneyAmount);
+            var newData = new TransactionData(fromBank, toBank, AccountNumber, toAccount, moneyAmount);
+            cb.MakeInterbankTransaction(newData);
         }
 
         public double CalculateMoneyAmountInTimePeriod(int days)

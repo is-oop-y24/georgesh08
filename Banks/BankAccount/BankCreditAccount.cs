@@ -1,6 +1,6 @@
 namespace Banks.BankAccount
 {
-    public class BankCreditAccount
+    public class BankCreditAccount : IBankAccount
     {
         public BankCreditAccount(double commission)
         {
@@ -8,8 +8,9 @@ namespace Banks.BankAccount
         }
 
         public double Commission { get; private set; }
+        public double InterestOnBalance { get; } = 0;
 
-        public void ChangeCommission(double newValue)
+        public void ChangeInterestOnBalance(double newValue)
         {
             Commission = newValue;
         }

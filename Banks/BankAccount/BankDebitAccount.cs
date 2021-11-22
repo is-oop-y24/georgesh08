@@ -7,6 +7,8 @@ namespace Banks.BankAccount
             InterestOnBalance = interestOnBalance;
         }
 
+        public double Commission { get; } = 0;
+
         public double InterestOnBalance { get; private set; }
 
         public void ChangeInterestOnBalance(double newInterest)

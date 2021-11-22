@@ -18,12 +18,12 @@ namespace Banks.BankFolder
             return _instance ??= new CentralBank();
         }
 
-        public void MakeInterbankTransaction(Bank bankFrom, Bank toBank, Guid from, Guid to, double moneyAmount)
+        public void MakeInterbankTransaction(TransactionData data)
         {
-            GetAccountFromBank(bankFrom, from).WithDrawMoney(moneyAmount);
-            GetAccountFromBank(toBank, to).DepositMoney(moneyAmount);
-            bankFrom.RegisterTransaction(from, to, moneyAmount);
-            toBank.RegisterTransaction(from, to, moneyAmount);
+            GetAccountFromBank(data.FromBank, data.From).WithDrawMoney(data.MoneyAmount);
+            GetAccountFromBank(data.ToBank, data.To).DepositMoney(data.MoneyAmount);
+            data.FromBank.RegisterTransaction(data.From, data.To, data.MoneyAmount);
+            data.ToBank.RegisterTransaction(data.From, data.To, data.MoneyAmount);
         }
 
         public void CancelTransaction(Bank withdrawalBank, Guid transactionId)
@@ -42,7 +42,7 @@ namespace Banks.BankFolder
 
         public Bank RegisterNewBank(string name)
         {
-            var newBank = new BankFolder.Bank(name);
+            var newBank = new Bank(name);
             _banks.Add(newBank);
             return newBank;
         }

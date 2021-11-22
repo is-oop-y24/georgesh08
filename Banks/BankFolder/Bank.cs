@@ -29,8 +29,12 @@ namespace Banks.BankFolder
 
         public Client RegisterNewClient(string name, string surname, string passport, string address)
         {
-            Client newClient = new Client.Builder().SetName(name).SetSurname(surname).SetPassport(passport)
-                .SetAddress(address).GetClient();
+            Client newClient = new Client.Builder()
+                .SetName(name)
+                .SetSurname(surname)
+                .SetPassport(passport)
+                .SetAddress(address)
+                .GetClient();
             _clients.Add(newClient);
             return newClient;
         }
