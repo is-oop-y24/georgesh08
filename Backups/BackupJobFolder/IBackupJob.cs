@@ -8,6 +8,6 @@ namespace Backups.BackupJob
         IReadOnlyList<string> Objects();
         void RemoveObject(string objectPath);
         void StartJob(Repository.Repository repository);
-        IReadOnlyList<RestorePoint> Points();
+        IReadOnlyList<RestorePoint.RestorePoint> Points();
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using Backups;
-using Backups.Repository;
+using Backups.RepositoryFolder;
+using Backups.RestorePointFolder;
 
 namespace BackupsExtra.Logging
 {
@@ -23,7 +23,7 @@ namespace BackupsExtra.Logging
             writer.WriteLine("Storages: ");
             for (int i = repo.Storages().Count; i > storagesBefore; --i)
             {
-                writer.WriteLine(repo.Storages().ElementAt(i));
+                writer.WriteLine(repo.Storages().ElementAt(i - 1).Key);
             }
         }
 

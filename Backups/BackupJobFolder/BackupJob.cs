@@ -8,7 +8,7 @@ namespace Backups.BackupJob
     {
         private IStorageAlgorithmType _algorithmType;
         private List<string> _filesToBackup;
-        private List<RestorePoint> _points = new List<RestorePoint>();
+        private List<RestorePoint.RestorePoint> _points = new List<RestorePoint.RestorePoint>();
 
         public BackupJob(string name, IStorageAlgorithmType algorithmType, List<string> files)
         {
@@ -29,7 +29,7 @@ namespace Backups.BackupJob
             return _filesToBackup;
         }
 
-        public IReadOnlyList<RestorePoint> Points()
+        public IReadOnlyList<RestorePoint.RestorePoint> Points()
         {
             return _points;
         }
@@ -49,9 +49,9 @@ namespace Backups.BackupJob
             _points.Add(_algorithmType.Backup(repository, _filesToBackup, (_points.Count + 1).ToString()));
         }
 
-        private RestorePoint AddRestorePoint(List<string> files)
+        private RestorePoint.RestorePoint AddRestorePoint(List<string> files)
         {
-            return new RestorePoint(files);
+            return new RestorePoint.RestorePoint(files);
         }
     }
 }

@@ -1,17 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Backups.BackupJob;
-using Backups.Repository;
+using Backups.BackupJobFolder;
+using Backups.RepositoryFolder;
 using Backups.StorageAlgorithm;
 using BackupsExtra.Logging;
+using BackupsExtra.PointRemover;
 
 namespace BackupsExtra.Subjects
 {
-    public class BackupJobSubject : ISubject
+    public class BackupJobSubject
     {
+        private bool _timeCodePrefixNeeded;
         private BackupJob _job;
         private Repository _repository;
         private List<ILogger> _observers = new List<ILogger>();
+        private IPointRemover _pointRemover;
 
         public BackupJobSubject(
             string name,
@@ -26,68 +30,86 @@ namespace BackupsExtra.Subjects
             {
                 observer.BackupJobCreationNotification(name, creationTimeNeeded);
             }
+
+            _timeCodePrefixNeeded = creationTimeNeeded;
         }
 
-        public void StartJob(bool timeCodePrefixNeeded = false)
+        public void StartJob()
         {
             int currentStorages = _repository.Storages().Count;
             _job.StartJob(_repository);
-            NewStorageNotification(currentStorages, timeCodePrefixNeeded);
-            NewRestorePointNotification(timeCodePrefixNeeded);
+            NotifyRemover();
+            NewStorageNotification(currentStorages);
+            NewRestorePointNotification();
         }
 
-        public void AddFile(string filePath, bool timeCodePrefixNeeded = false)
+        public void AddFile(string filePath)
         {
             _job.AddObject(filePath);
-            NewFileAddedNotification(timeCodePrefixNeeded);
+            NewFileAddedNotification();
         }
 
-        public void RemoveFile(string filePath, bool timeCodePrefixNeeded = false)
+        public void RemoveFile(string filePath)
         {
             _job.RemoveObject(filePath);
-            FileDeletedNotification(timeCodePrefixNeeded);
+            FileDeletedNotification();
         }
 
-        public void Attach(ILogger logger)
+        public void AttachLogger(ILogger logger)
         {
             _observers.Add(logger);
         }
 
-        public void Detach(ILogger logger)
+        public void DetachLogger(ILogger logger)
         {
             _observers.Remove(logger);
         }
 
-        public void NewRestorePointNotification(bool timeCodePrefixNeeded = false)
+        public void AttachPointRemover(IPointRemover remover)
+        {
+            _pointRemover = remover;
+        }
+
+        public void DetachPointRemover()
+        {
+            _pointRemover = null;
+        }
+
+        private void NewRestorePointNotification()
         {
             foreach (ILogger observer in _observers)
             {
-                observer.RestorePointCreationNotification(_job.Points().Last(), timeCodePrefixNeeded);
+                observer.RestorePointCreationNotification(_job.Points().Last(), _timeCodePrefixNeeded);
             }
         }
 
-        public void NewStorageNotification(int currentStorages, bool timeCodePrefixNeeded = false)
+        private void NewStorageNotification(int currentStorages)
         {
             foreach (ILogger observer in _observers)
             {
-                observer.StorageCreationNotification(_repository, currentStorages, timeCodePrefixNeeded);
+                observer.StorageCreationNotification(_repository, currentStorages, _timeCodePrefixNeeded);
             }
         }
 
-        public void NewFileAddedNotification(bool timeCodePrefixNeeded = false)
+        private void NewFileAddedNotification()
         {
             foreach (ILogger observer in _observers)
             {
-                observer.AddingFileToBackupJobNotification(_job.Objects().Last(), _job.Name, timeCodePrefixNeeded);
+                observer.AddingFileToBackupJobNotification(_job.Objects().Last(), _job.Name, _timeCodePrefixNeeded);
             }
         }
 
-        public void FileDeletedNotification(bool timeCodePrefixNeeded = false)
+        private void FileDeletedNotification()
         {
             foreach (ILogger observer in _observers)
             {
-                observer.DeletingFileFromBackupJobNotification(_job.Objects().Last(), _job.Name, timeCodePrefixNeeded);
+                observer.DeletingFileFromBackupJobNotification(_job.Objects().Last(), _job.Name, _timeCodePrefixNeeded);
             }
+        }
+
+        private void NotifyRemover()
+        {
+            _pointRemover?.Update(_job);
         }
     }
 }
