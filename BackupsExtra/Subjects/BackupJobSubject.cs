@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Backups.BackupJobFolder;
 using Backups.RepositoryFolder;
 using Backups.StorageAlgorithm;
@@ -27,7 +26,8 @@ namespace BackupsExtra.Subjects
             _repository = repo;
             foreach (ILogger observer in _observers)
             {
-                observer.BackupJobCreationNotification(name, creationTimeNeeded);
+                string message = "Job initialized.";
+                observer.Log(message, _timeCodePrefixNeeded);
             }
 
             _timeCodePrefixNeeded = creationTimeNeeded;
@@ -35,10 +35,9 @@ namespace BackupsExtra.Subjects
 
         public void StartJob()
         {
-            int currentStorages = _repository.Storages().Count;
             _job.StartJob(_repository);
             NotifyRemover();
-            NewStorageNotification(currentStorages);
+            NewStorageNotification();
             NewRestorePointNotification();
         }
 
@@ -83,15 +82,17 @@ namespace BackupsExtra.Subjects
         {
             foreach (ILogger observer in _observers)
             {
-                observer.RestorePointCreationNotification(_job.Points().Last(), _timeCodePrefixNeeded);
+                string message = "Restore point created.";
+                observer.Log(message, _timeCodePrefixNeeded);
             }
         }
 
-        private void NewStorageNotification(int currentStorages)
+        private void NewStorageNotification()
         {
             foreach (ILogger observer in _observers)
             {
-                observer.StorageCreationNotification(_repository, currentStorages, _timeCodePrefixNeeded);
+                string message = "Storage created.";
+                observer.Log(message, _timeCodePrefixNeeded);
             }
         }
 
@@ -99,7 +100,8 @@ namespace BackupsExtra.Subjects
         {
             foreach (ILogger observer in _observers)
             {
-                observer.AddingFileToBackupJobNotification(_job.Objects().Last(), _job.Name, _timeCodePrefixNeeded);
+                string message = "File added.";
+                observer.Log(message, _timeCodePrefixNeeded);
             }
         }
 
@@ -107,7 +109,8 @@ namespace BackupsExtra.Subjects
         {
             foreach (ILogger observer in _observers)
             {
-                observer.DeletingFileFromBackupJobNotification(_job.Objects().Last(), _job.Name, _timeCodePrefixNeeded);
+                string message = "File deleted.";
+                observer.Log(message, _timeCodePrefixNeeded);
             }
         }
 

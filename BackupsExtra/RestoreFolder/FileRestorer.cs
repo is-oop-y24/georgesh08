@@ -5,7 +5,7 @@ using BackupsExtra.Subjects;
 
 namespace BackupsExtra.RestoreFolder
 {
-    public class Restorer : IRestorer
+    public class FileRestorer : IRestorer
     {
         public void RestoreToOriginLocation(BackupJobSubject job, RestorePoint point)
         {
