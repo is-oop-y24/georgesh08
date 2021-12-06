@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Backups.RestorePoint
+namespace Backups.RestorePointFolder
 {
     public class RestorePoint
     {
@@ -14,6 +14,12 @@ namespace Backups.RestorePoint
             _filesList = copiesList;
         }
 
+        public RestorePoint(DateTime creationTime, List<string> files)
+        {
+            _creationTime = creationTime;
+            _filesList = files;
+        }
+
         public DateTime CreationTime()
         {
             return _creationTime;
@@ -22,6 +28,11 @@ namespace Backups.RestorePoint
         public IReadOnlyList<string> FilesList()
         {
             return _filesList;
+        }
+
+        public void AddFile(string filePath)
+        {
+            _filesList.Add(filePath);
         }
     }
 }

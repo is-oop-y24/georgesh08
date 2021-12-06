@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Backups.BackupJobFolder;
@@ -11,10 +10,10 @@ namespace BackupsExtra.Subjects
 {
     public class BackupJobSubject
     {
-        private bool _timeCodePrefixNeeded;
-        private BackupJob _job;
-        private Repository _repository;
-        private List<ILogger> _observers = new List<ILogger>();
+        private readonly bool _timeCodePrefixNeeded;
+        private readonly BackupJob _job;
+        private readonly Repository _repository;
+        private readonly List<ILogger> _observers = new List<ILogger>();
         private IPointRemover _pointRemover;
 
         public BackupJobSubject(
@@ -73,6 +72,11 @@ namespace BackupsExtra.Subjects
         public void DetachPointRemover()
         {
             _pointRemover = null;
+        }
+
+        public BackupJob BackupJob()
+        {
+            return _job;
         }
 
         private void NewRestorePointNotification()

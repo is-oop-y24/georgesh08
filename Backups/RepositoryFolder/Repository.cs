@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Backups.Repository
+namespace Backups.RepositoryFolder
 {
     public class Repository
     {

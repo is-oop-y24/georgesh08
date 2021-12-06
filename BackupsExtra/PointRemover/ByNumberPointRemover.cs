@@ -1,6 +1,7 @@
 using System.Linq;
 using Backups.BackupJobFolder;
 using Backups.RestorePointFolder;
+using BackupsExtra.Tools;
 
 namespace BackupsExtra.PointRemover
 {
@@ -10,6 +11,11 @@ namespace BackupsExtra.PointRemover
 
         public ByNumberPointRemover(int num)
         {
+            if (num < 0)
+            {
+                throw new PointRemoverException("Number of points can't be negative");
+            }
+
             _limitNum = num;
         }
 
@@ -17,6 +23,11 @@ namespace BackupsExtra.PointRemover
         {
             while (job.Points().Count > _limitNum)
             {
+                if (job.Points().Count == 1)
+                {
+                    throw new PointRemoverException("Can't delete all points.");
+                }
+
                 RemovePoints(job, job.Points().First());
             }
         }

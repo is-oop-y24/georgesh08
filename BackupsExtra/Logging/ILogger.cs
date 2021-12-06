@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Backups;
 using Backups.RepositoryFolder;
 using Backups.RestorePointFolder;
 

@@ -1,14 +1,17 @@
 using System.Collections.Generic;
+using Backups.RepositoryFolder;
+using Backups.RestorePointFolder;
 using Backups.StorageAlgorithm;
 using Backups.Tools;
 
-namespace Backups.BackupJob
+namespace Backups.BackupJobFolder
 {
     public class BackupJob : IBackupJob
     {
         private IStorageAlgorithmType _algorithmType;
         private List<string> _filesToBackup;
-        private List<RestorePoint.RestorePoint> _points = new List<RestorePoint.RestorePoint>();
+        private int _startCounter = 0;
+        private List<RestorePoint> _points = new List<RestorePoint>();
 
         public BackupJob(string name, IStorageAlgorithmType algorithmType, List<string> files)
         {
@@ -29,7 +32,7 @@ namespace Backups.BackupJob
             return _filesToBackup;
         }
 
-        public IReadOnlyList<RestorePoint.RestorePoint> Points()
+        public IReadOnlyList<RestorePoint> Points()
         {
             return _points;
         }
@@ -44,14 +47,19 @@ namespace Backups.BackupJob
             _filesToBackup.Remove(objectPath);
         }
 
-        public void StartJob(Repository.Repository repository)
+        public void StartJob(Repository repository)
         {
-            _points.Add(_algorithmType.Backup(repository, _filesToBackup, (_points.Count + 1).ToString()));
+            _points.Add(_algorithmType.Backup(repository, _filesToBackup, (++_startCounter).ToString()));
         }
 
-        private RestorePoint.RestorePoint AddRestorePoint(List<string> files)
+        public void RemovePoint(RestorePoint point)
         {
-            return new RestorePoint.RestorePoint(files);
+            _points.Remove(point);
+        }
+
+        private RestorePoint AddRestorePoint(List<string> files)
+        {
+            return new RestorePoint(files);
         }
     }
 }
