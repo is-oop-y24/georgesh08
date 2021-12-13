@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Backups.RepositoryFolder;
+using Backups.RestorePointFolder;
 using Backups.StorageType;
 
 namespace Backups.StorageAlgorithm
@@ -14,7 +16,7 @@ namespace Backups.StorageAlgorithm
             _storageType = type;
         }
 
-        public RestorePoint Backup(Repository.Repository repository, List<string> files, string name)
+        public RestorePoint Backup(Repository repository, List<string> files, string name)
         {
             var newPaths = new List<string>();
             string storage = _storageType.InitStorage(repository.Path, name);
