@@ -2,11 +2,16 @@ using Microsoft.Data.Sqlite;
 
 namespace Reports.Server.Database
 {
-    public class DatabaseContext
+    public class LocalDatabaseContext : IDatabaseContext
     {
-        private const string DbPath = "C:\\Users\\geo02\\Desktop\\Db\\reportsDb.db";
-        private readonly SqliteConnection _connection = new($"Data Source={DbPath};");
+        private static string _dbPath;
+        private SqliteConnection _connection = new($"Data Source={_dbPath};");
 
+        public LocalDatabaseContext(string Path)
+        {
+            _dbPath = Path;
+        }
+        
         public void ExecuteCommand(string query)
         {
             _connection.Open();

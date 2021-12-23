@@ -4,7 +4,12 @@ namespace Reports.Server.Services
 {
     public class ReportService : IReportService
     {
-        private DatabaseContext _databaseContext = new DatabaseContext();
+        private IDatabaseContext _databaseContext;
+
+        public ReportService(IDatabaseContext context)
+        {
+            _databaseContext = context;
+        }
         public string GetAll()
         {
             string query = "SELECT * FROM Reports AS TEXT";

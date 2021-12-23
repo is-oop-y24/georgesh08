@@ -5,7 +5,12 @@ namespace Reports.Server.Services
 {
     public class TaskService : ITaskService
     {
-        private DatabaseContext _databaseContext = new DatabaseContext();
+        private IDatabaseContext _databaseContext;
+
+        public TaskService(IDatabaseContext context)
+        {
+            _databaseContext = context;
+        }
         public void CreateTask(string instance)
         {
             var newTask = new Task(instance);

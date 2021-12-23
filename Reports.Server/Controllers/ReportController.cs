@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Reports.Server.Database;
 using Reports.Server.Services;
 
 namespace Reports.Server.Controllers
@@ -7,7 +8,7 @@ namespace Reports.Server.Controllers
     [Route("/report")]
     public class ReportController
     {
-        private ReportService _service = new ReportService();
+        private ReportService _service = new ReportService(DatabaseInitializer.GetInstance().Context);
         [HttpGet]
         public string Get([FromQuery] bool getAll = false, [FromQuery] string responsibleEmployee = null)
         {

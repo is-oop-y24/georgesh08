@@ -5,7 +5,12 @@ namespace Reports.Server.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private DatabaseContext _dbContext = new DatabaseContext();
+        private IDatabaseContext _dbContext;
+
+        public EmployeeService(IDatabaseContext context)
+        {
+            _dbContext = context;
+        }
 
         public string GetAll()
         {

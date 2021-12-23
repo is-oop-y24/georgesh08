@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Reports.Server.Database;
 using Reports.Server.Services;
 
 namespace Reports.Server.Controllers
@@ -7,7 +8,7 @@ namespace Reports.Server.Controllers
     [Route("/task")]
     public class TaskController
     {
-        private TaskService _service = new TaskService();
+        private TaskService _service = new TaskService(DatabaseInitializer.GetInstance().Context);
         
         [HttpGet]
         public string Get([FromQuery] bool getAll = false, [FromQuery] string taskId = null, [FromQuery] string creationTime = null,

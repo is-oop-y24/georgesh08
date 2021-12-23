@@ -1,7 +1,4 @@
-﻿using System;
-using Reports.DAL.Entities;
-
-namespace Reports.DAL
+﻿namespace Reports.DAL
 {
     class Program
     {
