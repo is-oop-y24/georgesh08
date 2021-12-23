@@ -8,7 +8,7 @@ namespace Reports.Server.Controllers
     [Route("/task")]
     public class TaskController
     {
-        private TaskService _service = new TaskService(DatabaseInitializer.GetInstance().Context);
+        private TaskService _service = new TaskService();
         
         [HttpGet]
         public string Get([FromQuery] bool getAll = false, [FromQuery] string taskId = null, [FromQuery] string creationTime = null,
@@ -16,7 +16,7 @@ namespace Reports.Server.Controllers
         {
             if (getAll)
             {
-                return _service.GetAll();
+                return _service.GetAllTasks();
             }
 
             if (!string.IsNullOrEmpty(creationTime))

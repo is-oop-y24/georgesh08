@@ -8,13 +8,13 @@ namespace Reports.Server.Controllers
     [Route("/report")]
     public class ReportController
     {
-        private ReportService _service = new ReportService(DatabaseInitializer.GetInstance().Context);
+        private ReportService _service = new ReportService();
         [HttpGet]
         public string Get([FromQuery] bool getAll = false, [FromQuery] string responsibleEmployee = null)
         {
             if (getAll)
             {
-                _service.GetAll();
+                _service.GetAllReports();
             }
 
             if (!string.IsNullOrEmpty(responsibleEmployee))
@@ -32,7 +32,7 @@ namespace Reports.Server.Controllers
         {
             if (!(string.IsNullOrEmpty(newInstance) && string.IsNullOrEmpty(employee)))
             {
-                _service.UpdateInstance(newInstance, employee);
+                _service.UpdateReportInstance(newInstance, employee);
             }
 
             if (!(string.IsNullOrEmpty(relatedTaskId) && string.IsNullOrEmpty(employee)))

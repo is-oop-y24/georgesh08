@@ -5,10 +5,10 @@ namespace Reports.Server.Services
 {
     public interface IEmployeeService
     {
-        string GetAll();
-        string GetById(string id);
-        void Create(string name);
-        void Delete(string id);
-        void Update(string id,  string newName, string newMaster);
+        string GetAllEmployees();
+        string GetEmployeeById(string id);
+        void CreateEmployee(string name);
+        void DeleteEmployee(string id);
+        void UpdateEmployee(string id, string newName, string newMaster);
     }
 }

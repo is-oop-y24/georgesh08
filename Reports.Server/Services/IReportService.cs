@@ -2,9 +2,9 @@ namespace Reports.Server.Services
 {
     public interface IReportService
     {
-        string GetAll();
+        string GetAllReports();
         string GetByEmployee(string employeeId);
-        void UpdateInstance(string newInstance, string id);
+        void UpdateReportInstance(string newInstance, string id);
         void UpdateRelatedTask(string newTask, string id);
     }
 }

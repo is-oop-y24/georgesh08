@@ -8,19 +8,19 @@ namespace Reports.Server.Controllers
     [Route("/employee")]
     public class EmployeeController : ControllerBase
     {
-        private EmployeeService _service = new EmployeeService(DatabaseInitializer.GetInstance().Context);
+        private EmployeeService _service = new EmployeeService();
         
         [HttpGet]
         public string Get([FromQuery] string id = null, [FromQuery] bool getAll = false)
         {
             if (getAll)
             {
-                return _service.GetAll();
+                return _service.GetAllEmployees();
             }
 
             if (!string.IsNullOrEmpty(id))
             {
-                _service.GetById(id);
+                _service.GetEmployeeById(id);
             }
 
             return null;
@@ -31,20 +31,20 @@ namespace Reports.Server.Controllers
         {
             if(!string.IsNullOrWhiteSpace(name))
             {
-                _service.Create(name);
+                _service.CreateEmployee(name);
             }
         }
 
         [HttpDelete]
         public void Delete([FromQuery] string id)
         {
-            _service.Delete(id);
+            _service.DeleteEmployee(id);
         }
 
         [HttpPut]
         public void Update([FromQuery] string id, [FromQuery] string newName, [FromQuery] string newMaster)
         {
-            _service.Update(id, newName, newMaster);
+            _service.UpdateEmployee(id, newName, newMaster);
         }
     }
 }
